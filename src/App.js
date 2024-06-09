@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetDataAction } from './redux/actions/fetchActions'
 
-function App() {
+const App = () => {
+
+  const dispatch = useDispatch()
+  const state = useSelector((state) => state.fetchDataReducer.data)
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(res => res.json())
+      .then(data => dispatch(fetDataAction(data)))
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      {
+        state && state.map((res) => (
+          <div key={res.id}>
+            <h4>
+              <Link to={`/${res.id}`}>{res.title}</Link>
+            </h4>
+            <hr />
+          </div>
+        ))
+      }
+    </div >
   );
 }
 
