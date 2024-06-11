@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Details from './Details'
+import Header from './Header';
 import reportWebVitals from './reportWebVitals';
 
 // redux store
@@ -14,6 +15,7 @@ import rootReducer from './redux/reducer/rootReducer';
 // routings
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import TodoAdd from './todoApp'
 
 const store = createStore(rootReducer)
 
@@ -23,9 +25,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+      <Header/>
         <Routes>
           <Route path='/' element={<App />} />
           <Route path='/:id' element={<Details />} />
+          <Route path='/todo-app' element={<TodoAdd/>}/>
         </Routes>
       </BrowserRouter>
     </Provider>
